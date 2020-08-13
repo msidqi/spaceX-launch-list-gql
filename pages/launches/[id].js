@@ -22,9 +22,8 @@ const LaunchPage = () => {
   });
   if (!data) return "loading...";
   const { launch } = data;
-  if (!launch) return "404 Not Found"
-  console.log(launch);
   if (error) return `Error! ${error.message}`;
+  if (!launch) return "404 Not Found";
   const videoID = getVideoID(launch.links.video_link);
   const { year, month, day } = getDateFromString(launch.launch_date_local);
   return (
@@ -68,29 +67,7 @@ const LaunchPage = () => {
   );
 };
 
-export async function getStaticPaths() {
-  const apolloClient = initializeApollo();
-
-  const { data } = await apolloClient.query({
-    query: ALL_LAUNCHES_ID_QUERY,
-    // variables: {
-    //   limit: 2,
-    // },
-  });
-
-  const paths = data.launches.map(({ id }) => ({
-    params: {
-      id,
-    },
-  }));
-
-  return {
-    paths,
-    fallback: true,
-  };
-}
-
-export async function getStaticProps({ params: { id } }) {
+export async function getServerSideProps({ params: { id } }) {
   const apolloClient = initializeApollo();
 
   await apolloClient.query({
@@ -102,7 +79,6 @@ export async function getStaticProps({ params: { id } }) {
     props: {
       initialApolloState: apolloClient.cache.extract(),
     },
-    revalidate: 1,
   };
 }
 
