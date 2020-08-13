@@ -22,9 +22,8 @@ const LaunchPage = () => {
   });
   if (!data) return "loading...";
   const { launch } = data;
-  if (!launch) return "404 Not Found"
-  console.log(launch);
   if (error) return `Error! ${error.message}`;
+  if (!launch) return "404 Not Found"
   const videoID = getVideoID(launch.links.video_link);
   const { year, month, day } = getDateFromString(launch.launch_date_local);
   return (
@@ -73,9 +72,6 @@ export async function getStaticPaths() {
 
   const { data } = await apolloClient.query({
     query: ALL_LAUNCHES_ID_QUERY,
-    // variables: {
-    //   limit: 2,
-    // },
   });
 
   const paths = data.launches.map(({ id }) => ({

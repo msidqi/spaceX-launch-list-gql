@@ -36,7 +36,6 @@ const IndexPage = () => {
     notifyOnNetworkStatusChange: true,
   });
 
-  //   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
   const nextPage = () => setPage(page + 1);
   const previousPage = () => page - 1 >= 0 && setPage(page - 1);
@@ -91,7 +90,7 @@ export async function getStaticProps() {
     props: {
       initialApolloState: apolloClient.cache.extract(),
     },
-    revalidate: 1,
+    revalidate: 100,
   };
 }
 
