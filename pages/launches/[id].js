@@ -11,27 +11,27 @@ import {
 } from "../../graphql/queries";
 import { GlobalContainer, ContainerPad } from "../../components/Container";
 import { Cover } from "../../components/Cover";
-import Status from '../../components/Status';
+import Status from "../../components/Status";
 
 const LaunchPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const {
-    error,
-    data: { launch },
-  } = useQuery(SINGLE_LAUNCH_QUERY, {
+  const { error, data } = useQuery(SINGLE_LAUNCH_QUERY, {
     variables: { id },
   });
+  if (!data) return "loading...";
+  const { launch } = data;
+  if (!launch) return "404 Not Found"
+  console.log(launch);
   if (error) return `Error! ${error.message}`;
   const videoID = getVideoID(launch.links.video_link);
   const { year, month, day } = getDateFromString(launch.launch_date_local);
-  //   console.log(launch);
   return (
     <>
       <Header />
       <GlobalContainer>
         <Status
-          isUpcomming={launch.upcoming}
+          isUpcoming={launch.upcoming}
           isSuccess={launch.launch_success}
         />
         <Cover src={launch.links.flickr_images[0]}>
@@ -42,21 +42,23 @@ const LaunchPage = () => {
             <DateIcon /> {day} {month} {year}
           </p>
           <p>
-            <RocketIcon /> {launch.rocket.rocket_name} |{" "}
+            <RocketIcon /> {launch.rocket.rocket_name} | type{" "}
             {launch.rocket.rocket_type} | {launch.rocket.rocket.mass.kg} kg |{" "}
             {launch.rocket.rocket.engines.number} engines
           </p>
           <p>
             {launch.details}{" "}
-            <a
-              href={launch.links.article_link}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              read more
-            </a>
+            {!!launch.links.article_link && (
+              <a
+                href={launch.links.article_link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                read more
+              </a>
+            )}
           </p>
-          {videoID && (
+          {!!videoID && (
             <EmbededVideo url={`https://www.youtube.com/embed/${videoID}`} />
           )}
         </ContainerPad>
@@ -70,7 +72,9 @@ export async function getStaticPaths() {
 
   const { data } = await apolloClient.query({
     query: ALL_LAUNCHES_ID_QUERY,
-    variables: { limit: 10 },
+    // variables: {
+    //   limit: 2,
+    // },
   });
 
   const paths = data.launches.map(({ id }) => ({

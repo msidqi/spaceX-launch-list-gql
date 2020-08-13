@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 export const ALL_LAUNCHES_ID_QUERY = gql`
-query allLaunchesID($limit: Int!) {
+query allLaunchesID($limit: Int) {
   launches(limit: $limit) {
 	id
   }
@@ -41,8 +41,8 @@ query singleLaunch($id: ID!) {
 `;
 
 export const LAUNCHES = gql`
-  query spacexLaunches($limit: Int!) {
-	launches(limit: $limit) {
+  query spacexLaunches($limit: Int!, $sort: String!, $order: String!, $offset: Int) {
+	launches(limit: $limit, sort: $sort, order: $order, offset: $offset) {
 		mission_name
 		launch_year
 		launch_site {

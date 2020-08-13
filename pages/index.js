@@ -3,31 +3,39 @@ import { useQuery } from "@apollo/client";
 import { LaunchCard } from "../components/LaunchCard";
 import Header from "../components/Header";
 import { LAUNCHES } from "../graphql/queries";
-import { FlexContainer } from '../components/FlexContainer';
+import { FlexContainer } from "../components/FlexContainer";
+import { ContainerPad } from "../components/Container";
 
 const launchesVars = {
-  limit: 10,
+  limit: 20,
   sort: "launch_date_local",
-  order: "DESC"
+  order: "DESC",
 };
 
-const IndexPage = ({ initialApolloState }) => {
-  const { loading, error, data, refetch, networkStatus } = useQuery(LAUNCHES, {
-    variables: launchesVars,
-    //   notifyOnNetworkStatusChange: true,
+const IndexPage = () => {
+  const [page, setPage] = React.useState(0);
+  const { loading, error, data } = useQuery(LAUNCHES, {
+    variables: {...launchesVars, offset: page},
+    notifyOnNetworkStatusChange: true,
   });
+
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
 
+  const nextPage = () => setPage(page + 10)
+  const { launches } = data;
   return (
     <>
       <Header />
-      <button onClick={() => refetch()}>Update</button>
       <FlexContainer>
-        {data.launches.map((elem, index) => (
-          <LaunchCard key={`launchCard-${index}`} launch={elem}/>
+        {launches.map((elem, index) => (
+          <LaunchCard key={`launchCard-${index}`} launch={elem} />
         ))}
       </FlexContainer>
+
+      <ContainerPad style={{ textAlign: "center"}}>
+        <button onClick={nextPage}>Next</button>
+      </ContainerPad>
     </>
   );
 };

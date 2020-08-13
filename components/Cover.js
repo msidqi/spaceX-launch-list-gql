@@ -4,7 +4,7 @@ export const Cover = styled.div`
   width: 100%;
   max-height: 300px;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 18.96%, black 100%),
-    url(${({ src }) => src});
+    url(${({ src }) => src || 'https://d1qbemlbhjecig.cloudfront.net/prod/1.8.0/staticfiles/dist/app/bento-components/profile-grid/media/default-image.jpg?1921528efb1e84f4f11b3513f93b75af' });
   height: 150px;
   background-size: cover;
   background-position: center;

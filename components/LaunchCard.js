@@ -25,13 +25,20 @@ export const Card = styled.div`
 export const CardButton = styled.button`
   background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.secondary};
-  border-radius: 5px 0px 5px 0px;
+  border-radius: 0px 0px 5px 5px;
   border: none;
   padding: 8px 16px;
+  width: 100%;
   position: absolute;
   bottom: 0px;
   right: 0px;
+  font-weight: bold;
   font-family: Ubuntu;
+  &:hover {
+  	background-color: ${({ theme }) => theme.colors.secondary};
+	color: ${({ theme }) => theme.colors.primary};
+	box-shadow: 0px 0px 0px 2px ${({ theme }) => theme.colors.primary};
+  }
 `;
 
 export function LaunchCard({ launch }) {
