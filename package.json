@@ -8,6 +8,9 @@
   },
   "dependencies": {
     "@apollo/client": "3.1.1",
+    "@styled-icons/ionicons-sharp": "^10.14.1",
+    "@styled-icons/ionicons-solid": "^10.14.1",
+    "@styled-icons/material": "^10.14.1",
     "graphql": "^15.3.0",
     "next": "latest",
     "prop-types": "^15.6.2",

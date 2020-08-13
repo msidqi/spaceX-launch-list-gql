@@ -1,35 +1,26 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import styled from "styled-components";
+
+const StyledHeader = styled.header`
+		/* margin-bottom: 25px; */
+		/* font-size: 14px; */
+		/* margin-right: 15px; */
+		/* text-decoration: none; */
+		padding: 5px 30px;
+		margin-bottom: 50px;
+		/* background-color: #282a33; */
+		/* color: white; */
+`
 
 export default function Header() {
   const { pathname } = useRouter()
 
   return (
-    <header>
+    <StyledHeader>
       <Link href="/">
-        <a className={pathname === '/' ? 'is-active' : ''}>Home</a>
+        <a>Home</a>
       </Link>
-      <Link href="/about">
-        <a className={pathname === '/about' ? 'is-active' : ''}>About</a>
-      </Link>
-      <Link href="/client-only">
-        <a className={pathname === '/client-only' ? 'is-active' : ''}>
-          Client-Only
-        </a>
-      </Link>
-      <style jsx>{`
-        header {
-          margin-bottom: 25px;
-        }
-        a {
-          font-size: 14px;
-          margin-right: 15px;
-          text-decoration: none;
-        }
-        .is-active {
-          text-decoration: underline;
-        }
-      `}</style>
-    </header>
+    </StyledHeader>
   )
 }
