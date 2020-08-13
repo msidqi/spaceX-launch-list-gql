@@ -5,27 +5,30 @@ import Header from "../components/Header";
 import { LAUNCHES } from "../graphql/queries";
 import { FlexContainer } from "../components/FlexContainer";
 import { ContainerPad } from "../components/Container";
+import { useRouter } from "next/router";
+import App from "../components/App";
 
 const launchesVars = {
-  limit: 20,
+  offset: 10,
+  limit: 10,
   sort: "launch_date_local",
   order: "DESC",
 };
 
 const IndexPage = () => {
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = React.useState(10);
   const { loading, error, data } = useQuery(LAUNCHES, {
-    variables: {...launchesVars, offset: page},
+    variables: { ...launchesVars, offset: page },
     notifyOnNetworkStatusChange: true,
   });
 
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
 
-  const nextPage = () => setPage(page + 10)
+  const nextPage = () => setPage(page + 10);
   const { launches } = data;
   return (
-    <>
+    <App>
       <Header />
       <FlexContainer>
         {launches.map((elem, index) => (
@@ -33,10 +36,10 @@ const IndexPage = () => {
         ))}
       </FlexContainer>
 
-      <ContainerPad style={{ textAlign: "center"}}>
+      <ContainerPad style={{ textAlign: "center" }}>
         <button onClick={nextPage}>Next</button>
       </ContainerPad>
-    </>
+    </App>
   );
 };
 

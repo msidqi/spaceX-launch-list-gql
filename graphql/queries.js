@@ -51,6 +51,9 @@ export const LAUNCHES = gql`
 		launch_date_local
 		launch_success
 		id
+		links {
+			flickr_images
+		}
 	  }
   }
 `;

@@ -12,6 +12,7 @@ import {
 import { GlobalContainer, ContainerPad } from "../../components/Container";
 import { Cover } from "../../components/Cover";
 import Status from "../../components/Status";
+import App from '../../components/App'
 
 const LaunchPage = () => {
   const router = useRouter();
@@ -27,7 +28,7 @@ const LaunchPage = () => {
   const videoID = getVideoID(launch.links.video_link);
   const { year, month, day } = getDateFromString(launch.launch_date_local);
   return (
-    <>
+    <App>
       <Header />
       <GlobalContainer>
         <Status
@@ -63,7 +64,7 @@ const LaunchPage = () => {
           )}
         </ContainerPad>
       </GlobalContainer>
-    </>
+    </App>
   );
 };
 

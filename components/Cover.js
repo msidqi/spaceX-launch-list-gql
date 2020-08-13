@@ -9,7 +9,7 @@ export const Cover = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  border-radius: 5px 5px 0px 0px;
+  border-radius: 5px 5px ${({fullRadius}) => fullRadius ? '5px 5px' : '0px 0px'};
   backdrop-filter: blur(10px);
   display: flex;
   align-items: center;

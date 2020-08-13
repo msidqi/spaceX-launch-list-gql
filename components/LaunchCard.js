@@ -2,9 +2,13 @@ import styled from "styled-components";
 import React from "react";
 import Link from "next/link";
 import { getDateFromString } from "../lib/helpers";
+import { Cover } from "./Cover";
 
 export const Title = styled.h3`
-  color: ${({ theme }) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.secondary};
+  font-family: Ubuntu;
+  padding: 12px;
+  text-align: center;
 `;
 
 export const Card = styled.div`
@@ -12,7 +16,7 @@ export const Card = styled.div`
   background-color: ${({ theme }) => theme.colors.secondary};
   max-width: 300px;
   width: 100%;
-  padding: 8px;
+  /* padding: 8px; */
   margin: 10px;
   border-radius: 5px;
   position: relative;
@@ -37,7 +41,7 @@ export const CardButton = styled.button`
   &:hover {
   	background-color: ${({ theme }) => theme.colors.secondary};
 	color: ${({ theme }) => theme.colors.primary};
-	box-shadow: 0px 0px 0px 2px ${({ theme }) => theme.colors.primary};
+	box-shadow: 0px 0px 0px 2px ${({ theme }) => theme.colors.primary} inset;
   }
 `;
 
@@ -45,8 +49,10 @@ export function LaunchCard({ launch }) {
   const { year, month, day } = getDateFromString(launch.launch_date_local);
   return (
     <Card>
-      <Title>Mission Name: {launch.mission_name}</Title>
-      Launch Date: {day} {month} {year}
+		<Cover fullRadius src={launch.links.flickr_images[0]} >
+			<Title>{launch.mission_name}</Title>
+			{/* <Title>{day} {month} {year}</Title> */}
+		</Cover>
       <Link href={`/launches/${launch.id}`}>
         <CardButton>Details</CardButton>
       </Link>
