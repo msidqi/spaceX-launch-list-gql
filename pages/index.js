@@ -7,6 +7,8 @@ import { FlexContainer } from '../components/FlexContainer';
 
 const launchesVars = {
   limit: 10,
+  sort: "launch_date_local",
+  order: "DESC"
 };
 
 const IndexPage = ({ initialApolloState }) => {

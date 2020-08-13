@@ -15,6 +15,7 @@ query singleLaunch($id: ID!) {
 	mission_name
 	launch_success
 	launch_date_local
+	upcoming
 	links {
 	  flickr_images
 	  article_link
@@ -41,17 +42,15 @@ query singleLaunch($id: ID!) {
 
 export const LAUNCHES = gql`
   query spacexLaunches($limit: Int!) {
-    launches(limit: $limit) {
-	  id
-      mission_name
-      launch_year
-      launch_site {
-        site_name
-      }
-      launch_date_local
-      links {
-        video_link
-      }
-    }
+	launches(limit: $limit) {
+		mission_name
+		launch_year
+		launch_site {
+		  site_name
+		}
+		launch_date_local
+		launch_success
+		id
+	  }
   }
 `;

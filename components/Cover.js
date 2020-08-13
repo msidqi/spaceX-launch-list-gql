@@ -20,16 +20,3 @@ export const Cover = styled.div`
     background-position: bottom;
   }
 `;
-
-export const Status = styled.div`
-  background-color: ${({ theme, isSuccess }) =>
-    isSuccess ? theme.colors.green : theme.colors.red};
-  z-index: 2;
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  padding: 8px 16px;
-  border-radius: 0px 5px 0px 5px;
-  color: ${({ theme }) => theme.colors.secondary};
-  font-weight: bold;
-`;

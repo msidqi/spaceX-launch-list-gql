@@ -5,27 +5,35 @@ import EmbededVideo from "../../components/EmbededVideo";
 import { getVideoID, getDateFromString } from "../../lib/helpers";
 import Header from "../../components/Header";
 import { DateIcon, RocketIcon } from "../../components/Icons";
-import { SINGLE_LAUNCH_QUERY, ALL_LAUNCHES_ID_QUERY } from '../../graphql/queries'
+import {
+  SINGLE_LAUNCH_QUERY,
+  ALL_LAUNCHES_ID_QUERY,
+} from "../../graphql/queries";
 import { GlobalContainer, ContainerPad } from "../../components/Container";
-import { Cover, Status } from "../../components/Cover";
+import { Cover } from "../../components/Cover";
+import Status from '../../components/Status';
 
 const LaunchPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { error, data: { launch } } = useQuery(SINGLE_LAUNCH_QUERY, {
+  const {
+    error,
+    data: { launch },
+  } = useQuery(SINGLE_LAUNCH_QUERY, {
     variables: { id },
   });
   if (error) return `Error! ${error.message}`;
   const videoID = getVideoID(launch.links.video_link);
   const { year, month, day } = getDateFromString(launch.launch_date_local);
-//   console.log(launch);
+  //   console.log(launch);
   return (
     <>
       <Header />
       <GlobalContainer>
-        <Status isSuccess={launch.launch_success}>
-          {launch.launch_success ? "Successful launch" : "Failed launch"}
-        </Status>
+        <Status
+          isUpcomming={launch.upcoming}
+          isSuccess={launch.launch_success}
+        />
         <Cover src={launch.links.flickr_images[0]}>
           <h1>{launch.mission_name}</h1>
         </Cover>
@@ -38,7 +46,7 @@ const LaunchPage = () => {
             {launch.rocket.rocket_type} | {launch.rocket.rocket.mass.kg} kg |{" "}
             {launch.rocket.rocket.engines.number} engines
           </p>
-          <p style={{ padding: "0px 10px" }}>
+          <p>
             {launch.details}{" "}
             <a
               href={launch.links.article_link}
