@@ -16,7 +16,6 @@ export const Card = styled.div`
   background-color: ${({ theme }) => theme.colors.secondary};
   max-width: 300px;
   width: 100%;
-  /* padding: 8px; */
   margin: 10px;
   border-radius: 5px;
   position: relative;
@@ -39,9 +38,7 @@ export const CardButton = styled.button`
   font-weight: bold;
   font-family: Ubuntu;
   &:hover {
-  	background-color: ${({ theme }) => theme.colors.secondary};
-	color: ${({ theme }) => theme.colors.primary};
-	box-shadow: 0px 0px 0px 2px ${({ theme }) => theme.colors.primary} inset;
+  	background-color: ${({ theme }) => theme.colors.primaryDarker};
   }
 `;
 

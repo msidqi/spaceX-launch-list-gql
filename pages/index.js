@@ -5,28 +5,36 @@ import Header from "../components/Header";
 import { LAUNCHES } from "../graphql/queries";
 import { FlexContainer } from "../components/FlexContainer";
 import { ContainerPad } from "../components/Container";
-import { useRouter } from "next/router";
+import { NavButton } from "../components/NavButton";
 import App from "../components/App";
 
+const STRIDE = 10;
 const launchesVars = {
-  offset: 10,
-  limit: 10,
+  offset: STRIDE,
+  limit: STRIDE,
   sort: "launch_date_local",
   order: "DESC",
 };
 
 const IndexPage = () => {
-  const [page, setPage] = React.useState(10);
+  const [page, setPage] = React.useState(2);
   const { loading, error, data } = useQuery(LAUNCHES, {
-    variables: { ...launchesVars, offset: page },
+    variables: { ...launchesVars, offset: page * STRIDE },
     notifyOnNetworkStatusChange: true,
   });
 
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
-
-  const nextPage = () => setPage(page + 10);
+  const nextPage = () => {
+    setPage(page + 1);
+  };
+  const previousPage = () => {
+    if (page - 1 >= 0) {
+      setPage(page - 1);
+    }
+  };
   const { launches } = data;
+  console.log("page", page);
   return (
     <App>
       <Header />
@@ -37,7 +45,10 @@ const IndexPage = () => {
       </FlexContainer>
 
       <ContainerPad style={{ textAlign: "center" }}>
-        <button onClick={nextPage}>Next</button>
+        {page - 1 >= 0 && (
+          <NavButton onClick={previousPage}>Previous</NavButton>
+        )}
+        {!!launches.length && <NavButton onClick={nextPage}>Next</NavButton>}
       </ContainerPad>
     </App>
   );
