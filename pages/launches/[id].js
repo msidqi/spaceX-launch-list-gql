@@ -12,7 +12,7 @@ import {
 import { GlobalContainer, ContainerPad } from "../../components/Container";
 import { Cover } from "../../components/Cover";
 import Status from "../../components/Status";
-import App from '../../components/App'
+import App from "../../components/App";
 
 const LaunchPage = () => {
   const router = useRouter();
@@ -23,7 +23,7 @@ const LaunchPage = () => {
   if (!data) return "loading...";
   const { launch } = data;
   if (error) return `Error! ${error.message}`;
-  if (!launch) return "404 Not Found"
+  if (!launch) return "404 Not Found";
   const videoID = getVideoID(launch.links.video_link);
   const { year, month, day } = getDateFromString(launch.launch_date_local);
   return (
@@ -72,6 +72,7 @@ export async function getStaticPaths() {
 
   const { data } = await apolloClient.query({
     query: ALL_LAUNCHES_ID_QUERY,
+    variables: { limit: 5, sort: "launch_date_local", order: "DESC" },
   });
 
   const paths = data.launches.map(({ id }) => ({

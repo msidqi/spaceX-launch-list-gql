@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const ALL_LAUNCHES_ID_QUERY = gql`
-query allLaunchesID($limit: Int) {
-  launches(limit: $limit) {
+query allLaunchesID($limit: Int, $sort: String, $order: String) {
+  launches(limit: $limit, sort: $sort, order: $order) {
 	id
   }
 }
