@@ -13,6 +13,7 @@ import { GlobalContainer, ContainerPad } from "../../components/Container";
 import { Cover } from "../../components/Cover";
 import Status from "../../components/Status";
 import App from "../../components/App";
+import Spinner from "../../components/Spinner";
 
 const LaunchPage = () => {
   const router = useRouter();
@@ -20,7 +21,9 @@ const LaunchPage = () => {
   const { error, data } = useQuery(SINGLE_LAUNCH_QUERY, {
     variables: { id },
   });
-  if (!data) return "loading...";
+  if (router.isFallback || !data) {
+    return <Spinner />;
+  }
   const { launch } = data;
   if (error) return `Error! ${error.message}`;
   if (!launch) return "404 Not Found";
